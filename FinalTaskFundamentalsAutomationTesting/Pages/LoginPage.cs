@@ -25,53 +25,15 @@ public class LoginPage
         return _webDriver;
     }
 
-    public void TypeUsername(string username)
-    {
-        var usernameInput = _webDriver.FindElement(UsernameInput);
-        usernameInput.SendKeys(username);
-    }
+    public void TypeUsername(string username) => TypeText(UsernameInput, username);
 
-    public void TypePassword(string password)
-    {
-        var passwordInput = _webDriver.FindElement(PasswordInput);
-        passwordInput.SendKeys(password);
-    }
+    public void TypePassword(string password) => TypeText(PasswordInput, password);
 
-    public void ClearUsername()
-    {
-        var usernameInput = _webDriver.FindElement(UsernameInput);
-        var cleanInputs = new Actions(_webDriver);
+    public void ClearUsername() => ClearInput(UsernameInput);
 
-        cleanInputs
-            .Click(usernameInput)
-            .KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control)
-            .SendKeys(Keys.Delete)
-            .Perform();
+    public void ClearPassword() => ClearInput(PasswordInput);
 
-        new WebDriverWait(_webDriver, TimeSpan.FromSeconds(2))
-            .Until(driver => usernameInput.GetAttribute("value") == string.Empty);
-    }
-
-    public void ClearPassword()
-    {
-        var passwordInput = _webDriver.FindElement(PasswordInput);
-        var cleanInputs = new Actions(_webDriver);
-
-        cleanInputs
-            .Click(passwordInput)
-            .KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control)
-            .SendKeys(Keys.Delete)
-            .Perform();
-
-        new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5))
-            .Until(driver => passwordInput.GetAttribute("value") == string.Empty);
-    }
-
-    public void ClickLoginButton()
-    {
-        var loginButton = _webDriver.FindElement(LoginButton);
-        loginButton.Click();
-    }
+    public void ClickLoginButton() => _webDriver.FindElement(LoginButton).Click();
 
     public string GetErrorMessage()
     {
@@ -83,5 +45,28 @@ public class LoginPage
         {
             return string.Empty;
         }
+    }
+
+    private void TypeText(By locator, string text)
+    {
+        var element = _webDriver.FindElement(locator);
+        element.SendKeys(text);
+    }
+
+    private void ClearInput(By locator)
+    {
+        var input = _webDriver.FindElement(locator);
+        var actions = new Actions(_webDriver);
+
+        actions
+            .Click(input)
+            .KeyDown(Keys.Control)
+            .SendKeys("a")
+            .KeyUp(Keys.Control)
+            .SendKeys(Keys.Delete)
+            .Perform();
+
+        new WebDriverWait(_webDriver, TimeSpan.FromSeconds(2))
+            .Until(driver => input.GetAttribute("value") == string.Empty);
     }
 }
