@@ -1,8 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FinalTaskFundamentalsAutomationTesting.Pages;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 
 namespace FinalTaskFundamentalsAutomationTesting;
 
@@ -19,38 +18,18 @@ public class LoginTests
     [TestMethod]
     public void LoginWithEmptyCredentials_ShouldShow_UsernameError()
     {
-        _webDriver.Navigate().GoToUrl("https://www.saucedemo.com/");
-
-        var usernameInput = _webDriver.FindElement(By.Id("user-name"));
-        var passwordInput = _webDriver.FindElement(By.Id("password"));
-        var loginButton = _webDriver.FindElement(By.Id("login-button"));
-
-        usernameInput.SendKeys("user-test1");
-        passwordInput.SendKeys("password-test");
-
-        var cleanInputs = new Actions(_webDriver);
-
-        cleanInputs
-            .Click(usernameInput)
-            .KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control)
-            .SendKeys(Keys.Delete)
-            .Click(passwordInput)
-            .KeyDown(Keys.Control).SendKeys("a").KeyUp(Keys.Control)
-            .SendKeys(Keys.Delete)
-            .Perform();
-
-        new WebDriverWait(_webDriver, TimeSpan.FromSeconds(2))
-            .Until(driver =>
-                usernameInput.GetAttribute("value") == "" &&
-                passwordInput.GetAttribute("value") == "");
-
-        loginButton.Click();
-
-        var errorMessage = _webDriver.FindElement(By.CssSelector("h3[data-test='error']"));
+        var loginPage = new LoginPage(_webDriver);
 
         try
         {
-            Assert.IsTrue(errorMessage.Text.Contains("Username is required"));
+            loginPage.Open();
+            loginPage.TypeUsername("user-test");
+            loginPage.TypePassword("password-test");
+            loginPage.ClearUsername();
+            loginPage.ClearPassword();
+            loginPage.ClickLoginButton();
+            var errorMessage = loginPage.GetErrorMessage();
+            Assert.IsTrue(errorMessage.Contains("Username is required"));
         }
         finally
         {
