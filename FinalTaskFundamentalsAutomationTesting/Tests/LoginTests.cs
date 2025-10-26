@@ -1,13 +1,22 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
+using FinalTaskFundamentalsAutomationTesting.Core.Logging;
 using FinalTaskFundamentalsAutomationTesting.Pages;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using OpenQA.Selenium;
 
 namespace FinalTaskFundamentalsAutomationTesting.Tests;
 
 [TestClass]
 public class LoginTests : TestBase
 {
+    [ClassInitialize]
+    public static void Initialize(TestContext context)
+    {
+        NLogSetup.Configure();
+        _logger = new NLogLogger(typeof(LoginTests));
+        _logger.LogInfo("Test initialization started.");
+    }
     /// <summary>
     /// Verifies that the login form displays an error message 
     /// when attempting to log in with empty credentials.
@@ -30,7 +39,7 @@ public class LoginTests : TestBase
     public void LoginWithEmptyCredentials_ShouldShow_UsernameError(BrowserType browserType)
     {
         // Given
-        var driver = GetDriver(browserType);
+        IWebDriver driver = GetDriver(browserType);
         var loginPage = new LoginPage(driver);
         loginPage.Open();
 
@@ -39,7 +48,7 @@ public class LoginTests : TestBase
         loginPage.ClickLoginButton();
 
         // Then
-        var errorMessage = loginPage.GetErrorMessage();
+        string errorMessage = loginPage.GetErrorMessage();
         errorMessage.Should().Contain("Username is required");
     }
 }

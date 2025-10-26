@@ -1,11 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FinalTaskFundamentalsAutomationTesting.Core;
+using FinalTaskFundamentalsAutomationTesting.Core.Logging;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 
-namespace FinalTaskFundamentalsAutomationTesting.Core;
+namespace FinalTaskFundamentalsAutomationTesting.Tests;
 
+[TestClass]
 public abstract class TestBase
 {
     private IWebDriver? _webDriver;
+    protected static ILogger _logger;
 
     protected IWebDriver GetDriver(BrowserType browserType)
     {
