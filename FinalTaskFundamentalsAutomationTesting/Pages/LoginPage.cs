@@ -19,10 +19,14 @@ public class LoginPage
     private By LoginButton => By.Id("login-button");
     private By ErrorMessage => By.CssSelector("h3[data-test='error']");
 
-    public IWebDriver Open()
+    public void Open() => _webDriver.Navigate().GoToUrl(_url);
+
+    public void EnterCredentialsAndThenClear(string username, string password)
     {
-        _webDriver.Navigate().GoToUrl(_url);
-        return _webDriver;
+        TypeUsername(username);
+        TypePassword(password);
+        ClearUsername();
+        ClearPassword();
     }
 
     public void TypeUsername(string username) => TypeText(UsernameInput, username);
