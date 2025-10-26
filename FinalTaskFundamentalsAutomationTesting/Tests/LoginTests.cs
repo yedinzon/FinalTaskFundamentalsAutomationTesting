@@ -1,22 +1,13 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
-using FinalTaskFundamentalsAutomationTesting.Core.Logging;
 using FinalTaskFundamentalsAutomationTesting.Pages;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OpenQA.Selenium;
 
 namespace FinalTaskFundamentalsAutomationTesting.Tests;
 
 [TestClass]
 public class LoginTests : TestBase
 {
-    [ClassInitialize]
-    public static void Initialize(TestContext context)
-    {
-        NLogSetup.Configure();
-        _logger = new NLogLogger(typeof(LoginTests));
-        _logger.LogInfo("Test initialization started.");
-    }
     /// <summary>
     /// Verifies that the login form displays an error message 
     /// when attempting to log in with empty credentials.
@@ -36,20 +27,26 @@ public class LoginTests : TestBase
     [TestMethod]
     [DataRow(BrowserType.Chrome)]
     [DataRow(BrowserType.Edge)]
-    public void LoginWithEmptyCredentials_ShouldShow_UsernameError(BrowserType browserType)
+    public void UC1_LoginWithEmptyCredentials_ShouldShow_UsernameError(BrowserType browserType)
     {
         // Given
-        IWebDriver driver = GetDriver(browserType);
-        var loginPage = new LoginPage(driver);
+        _logger.LogInfo($"Starting UC-1 test on {browserType}: LoginWithEmptyCredentials_ShouldShow_UsernameError");
+        SetupWebDriver(browserType);
+        var loginPage = new LoginPage(_webDriver, _logger);
         loginPage.Open();
+        _logger.LogInfo("Opened login page.");
 
         // When
         loginPage.EnterCredentialsAndThenClear("user-test", "password-test");
         loginPage.ClickLoginButton();
+        _logger.LogInfo("Clicked Login button after clearing credentials.");
 
         // Then
         string errorMessage = loginPage.GetErrorMessage();
+        _logger.LogInfo($"Error message displayed: {errorMessage}");
+
         errorMessage.Should().Contain("Username is required");
+        _logger.LogInfo("UC-1 test completed successfully.");
     }
 }
 

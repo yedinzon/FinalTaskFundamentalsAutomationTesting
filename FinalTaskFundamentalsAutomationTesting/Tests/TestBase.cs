@@ -8,14 +8,21 @@ namespace FinalTaskFundamentalsAutomationTesting.Tests;
 [TestClass]
 public abstract class TestBase
 {
-    private IWebDriver? _webDriver;
-    protected static ILogger _logger;
+    protected IWebDriver _webDriver = null!;
+    protected static ILogger _logger = null!;
 
-    protected IWebDriver GetDriver(BrowserType browserType)
+    [ClassInitialize(InheritanceBehavior.BeforeEachDerivedClass)]
+    public static void Initialize(TestContext context)
+    {
+        NLogSetup.Configure();
+        _logger = new NLogLogger(typeof(LoginTests));
+        _logger.LogInfo("Test initialization started.");
+    }
+
+    protected void SetupWebDriver(BrowserType browserType)
     {
         _webDriver ??= WebDriverFactory.Create(browserType);
-
-        return _webDriver;
+        _logger.LogInfo($"WebDriver initialized for {browserType}.");
     }
 
     [TestCleanup]
@@ -24,10 +31,11 @@ public abstract class TestBase
         try
         {
             _webDriver?.Quit();
+            _logger.LogInfo("Cleanup: WebDriver quit successfully.");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Cleanup warning: {ex.Message}");
+            _logger.LogError($"Cleanup error: {ex.Message}");
         }
     }
 }
