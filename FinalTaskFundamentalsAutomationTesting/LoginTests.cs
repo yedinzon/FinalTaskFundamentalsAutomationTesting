@@ -1,4 +1,5 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Pages;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -29,7 +30,7 @@ public class LoginTests
             loginPage.ClearPassword();
             loginPage.ClickLoginButton();
             var errorMessage = loginPage.GetErrorMessage();
-            Assert.IsTrue(errorMessage.Contains("Username is required"));
+            errorMessage.Should().Contain("Username is required");
         }
         finally
         {
