@@ -6,24 +6,26 @@ namespace FinalTaskFundamentalsAutomationTesting.Core.Logging;
 
 public static class NLogSetup
 {
+    private static readonly string LogDirectory = "logs";
+    private static readonly string LogFileNamePattern = "test_execution_${shortdate}_${threadid}.log";
+    private static readonly string Layout = "${longdate} | ${uppercase:${level}} | ${logger} | ${message} ${exception:format=toString}";
+    private static readonly string FileTarget = "logfile";
+    private static readonly string ConsoleTarget = "logconsole";
     public static void Configure()
     {
+        Directory.CreateDirectory(LogDirectory);
         var config = new LoggingConfiguration();
-        string logDir = "logs";
-        var layout = "${longdate} | ${uppercase:${level}} | ${logger} | ${message} ${exception:format=toString}";
-        string logFileName = Path.Combine(logDir, $"test_execution_${{shortdate}}_${{threadid}}.log");
-        Directory.CreateDirectory(logDir);
 
-        var logfile = new FileTarget("fileTarget")
+        var logfile = new FileTarget(FileTarget)
         {
-            FileName = logFileName,
-            Layout = layout,
+            FileName = Path.Combine(LogDirectory, LogFileNamePattern),
+            Layout = Layout,
             KeepFileOpen = false
         };
 
-        var logconsole = new ConsoleTarget("logconsole")
+        var logconsole = new ConsoleTarget(ConsoleTarget)
         {
-            Layout = layout
+            Layout = Layout
         };
 
         config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
