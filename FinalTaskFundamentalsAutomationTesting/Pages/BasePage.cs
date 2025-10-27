@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using System.Runtime.InteropServices;
 
 namespace FinalTaskFundamentalsAutomationTesting.Pages;
 
@@ -77,13 +78,14 @@ public abstract class BasePage
         try
         {
             var input = _webDriver.FindElement(locator);
-            var actions = new Actions(_webDriver);
+            var selectAllKey = RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ? Keys.Meta : Keys.Control;
 
+            var actions = new Actions(_webDriver);
             actions
                 .Click(input)
-                .KeyDown(Keys.Control)
+                .KeyDown(selectAllKey)
                 .SendKeys("a")
-                .KeyUp(Keys.Control)
+                .KeyUp(selectAllKey)
                 .SendKeys(Keys.Delete)
                 .Perform();
 

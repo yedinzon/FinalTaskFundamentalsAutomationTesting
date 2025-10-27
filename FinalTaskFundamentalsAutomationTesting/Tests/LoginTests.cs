@@ -34,6 +34,7 @@ public class LoginTests : TestBase
         string errorMessage = loginPage.GetErrorMessage();
         _logger.LogInfo($"Error message displayed: {errorMessage}");
 
+        loginPage.IsErrorMessageDisplayed().Should().BeTrue();
         errorMessage.Should().Contain("Username is required");
         _logger.LogInfo("UC-1 test completed successfully.");
     }
@@ -64,6 +65,7 @@ public class LoginTests : TestBase
         string errorMessage = loginPage.GetErrorMessage();
         _logger.LogInfo($"Error message displayed: {errorMessage}");
 
+        loginPage.IsErrorMessageDisplayed().Should().BeTrue();
         errorMessage.Should().Contain("Password is required");
         _logger.LogInfo("UC-2 test completed successfully.");
     }
@@ -100,5 +102,3 @@ public class LoginTests : TestBase
         _logger.LogInfo("UC-3 test completed successfully.");
     }
 }
-
-//TODO: Diferentes SO

@@ -130,4 +130,23 @@ public class LoginPage(IWebDriver webDriver, ILogger logger) : BasePage(webDrive
             throw;
         }
     }
+
+    /// <summary>
+    /// Checks if the error message is displayed on the login page.
+    /// </summary>
+    /// <returns>True if the error message is displayed; otherwise, false.</returns>
+    public bool IsErrorMessageDisplayed()
+    {
+        try
+        {
+            var isDisplayed = _webDriver.FindElement(ErrorMessage).Displayed;
+            _logger.LogDebug($"Error message displayed: {isDisplayed}");
+            return isDisplayed;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error checking error message display: {ex.Message}");
+            throw;
+        }
+    }
 }
