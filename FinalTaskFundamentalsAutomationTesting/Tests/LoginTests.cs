@@ -1,5 +1,6 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
 using FinalTaskFundamentalsAutomationTesting.Pages;
+using FinalTaskFundamentalsAutomationTesting.Tests.TestData;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -24,9 +25,8 @@ public class LoginTests : TestBase
         When he enters credentials and then clears both fields and clicks the Login button
         Then an error message "Username is required" should be displayed
     */
-    [TestMethod]
-    [DataRow(BrowserType.Chrome)]
-    [DataRow(BrowserType.Edge)]
+    [DataTestMethod]
+    [DynamicData(nameof(LoginTestData.EmptyCredentialsTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
     public void UC1_LoginWithEmptyCredentials_ShouldShow_UsernameError(BrowserType browserType)
     {
         // Given
@@ -65,10 +65,9 @@ public class LoginTests : TestBase
          When he enters a username, enters a password, then clears the password and clicks the Login button
          Then an error message "Password is required" should be displayed
      */
-    [TestMethod]
-    [DataRow(BrowserType.Chrome)]
-    [DataRow(BrowserType.Edge)]
-    public void UC2_LoginWithUsernameOnly_ShouldShow_PasswordError(BrowserType browserType)
+    [DataTestMethod]
+    [DynamicData(nameof(LoginTestData.CredentialsUsernameOnlyTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
+    public void UC2_LoginWithUsernameOnly_ShouldShow_PasswordError(BrowserType browserType, string username)
     {
         // Given
         _logger.LogInfo($"Starting UC-2 test on {browserType}: UC2_LoginWithUsernameOnly_ShouldShow_PasswordError");
@@ -78,7 +77,7 @@ public class LoginTests : TestBase
         _logger.LogInfo("Opened login page.");
 
         // When
-        loginPage.EnterCredentialsAndThenClear("user-test", "password-test", clearPasswordOnly: true);
+        loginPage.EnterCredentialsAndThenClear(username, "password-test", clearPasswordOnly: true);
         loginPage.ClickLoginButton();
         _logger.LogInfo("Clicked Login button after clearing the password field.");
 
@@ -106,10 +105,9 @@ public class LoginTests : TestBase
          When he enters a valid username and the password "secret_sauce" and clicks the Login button
          Then the dashboard should be displayed with the title "Swag Labs"
      */
-    [TestMethod]
-    [DataRow(BrowserType.Chrome)]
-    [DataRow(BrowserType.Edge)]
-    public void UC3_LoginWithValidCredentials_ShouldNavigateToDashboard(BrowserType browserType)
+    [DataTestMethod]
+    [DynamicData(nameof(LoginTestData.ValidCredentialsTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
+    public void UC3_LoginWithValidCredentials_ShouldNavigateToDashboard(BrowserType browserType, string username, string password)
     {
         // Given
         _logger.LogInfo($"Starting UC-3 test on {browserType}: UC3_LoginWithValidCredentials_ShouldNavigateToDashboard");
@@ -119,7 +117,7 @@ public class LoginTests : TestBase
         _logger.LogInfo("Opened login page.");
 
         // When
-        loginPage.EnterCredentials("standard_user", "secret_sauce");
+        loginPage.EnterCredentials(username, password);
         loginPage.ClickLoginButton();
         _logger.LogInfo("Clicked Login button with valid credentials.");
 

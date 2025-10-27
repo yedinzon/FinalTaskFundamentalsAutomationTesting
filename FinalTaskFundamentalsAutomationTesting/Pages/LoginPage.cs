@@ -14,21 +14,24 @@ public class LoginPage(IWebDriver webDriver, ILogger logger) : BasePage(webDrive
 
     public void EnterCredentialsAndThenClear(string username, string password, bool clearPasswordOnly = false)
     {
-        TypeUsername(username);
-        TypePassword(password);
-
-        if (!clearPasswordOnly)
-        {
-            ClearUsername();
-        }
-
-        ClearPassword();
+        EnterCredentials(username, password);
+        ClearCredentials(clearPasswordOnly);
     }
 
     public void EnterCredentials(string username, string password)
     {
         TypeUsername(username);
         TypePassword(password);
+    }
+
+    public void ClearCredentials(bool clearPasswordOnly = false)
+    {
+        if (!clearPasswordOnly)
+        {
+            ClearUsername();
+        }
+
+        ClearPassword();
     }
 
     public void TypeUsername(string username) => TypeText(UsernameInput, username);
