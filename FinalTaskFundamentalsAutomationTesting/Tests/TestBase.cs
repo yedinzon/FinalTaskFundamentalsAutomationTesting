@@ -1,4 +1,5 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
+using FinalTaskFundamentalsAutomationTesting.Core.BrowserFactory;
 using FinalTaskFundamentalsAutomationTesting.Core.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
