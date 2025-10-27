@@ -7,15 +7,32 @@ namespace FinalTaskFundamentalsAutomationTesting.Pages;
 
 public abstract class BasePage
 {
+    /// <summary>
+    /// Instance of IWebDriver to interact with the web browser.
+    /// </summary>
     protected readonly IWebDriver _webDriver;
+
+    /// <summary>
+    /// Instance of ILogger for logging purposes.
+    /// </summary>
     protected readonly ILogger _logger;
 
+    /// <summary>
+    /// Initializes a new instance of the BasePage class with the specified WebDriver and Logger.
+    /// </summary>
+    /// <param name="webDriver">The WebDriver instance to use for browser interactions.</param>
+    /// <param name="logger">The Logger instance to use for logging.</param>
     protected BasePage(IWebDriver webDriver, ILogger logger)
     {
         _webDriver = webDriver;
         _logger = logger;
     }
 
+    /// <summary>
+    /// Gets the text of a web element identified by the specified locator.
+    /// </summary>
+    /// <param name="locator">The locator of the web element.</param>
+    /// <returns>The text of the web element.</returns>    
     protected string GetTextLocator(By locator)
     {
         try
@@ -31,6 +48,11 @@ public abstract class BasePage
         }
     }
 
+    /// <summary>
+    /// Types the specified text into a web element identified by the given locator.
+    /// </summary>
+    /// <param name="locator">The locator of the web element.</param>
+    /// <param name="text">The text to type into the web element.</param>
     protected void TypeText(By locator, string text)
     {
         try
@@ -46,6 +68,10 @@ public abstract class BasePage
         }
     }
 
+    /// <summary>
+    /// Clears the input field identified by the specified locator.
+    /// </summary>
+    /// <param name="locator">The locator of the input field to clear.</param>
     protected void ClearInput(By locator)
     {
         try

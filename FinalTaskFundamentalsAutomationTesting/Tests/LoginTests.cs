@@ -13,18 +13,7 @@ public class LoginTests : TestBase
     /// Verifies that the login form displays an error message 
     /// when attempting to log in with empty credentials.
     /// </summary>
-    /// <param name="browserType">The browser in which the test will run (Chrome, Edge, etc.).</param>
-    /*
-    Feature UC1: Login Validation
-      As a user of the application
-      I want to be informed when required fields are missing
-      so that I can provide the correct login information
-
-      Scenario: Login with empty credentials
-        Given the user is on the login page
-        When he enters credentials and then clears both fields and clicks the Login button
-        Then an error message "Username is required" should be displayed
-    */
+    /// <param name="browserType">The browser in which the test will run (Chrome, Edge, etc.).</param>   
     [DataTestMethod]
     [DynamicData(nameof(LoginTestData.EmptyCredentialsTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
     public void UC1_LoginWithEmptyCredentials_ShouldShow_UsernameError(BrowserType browserType)
@@ -53,18 +42,8 @@ public class LoginTests : TestBase
     /// Verifies that the login form displays an error message 
     /// when attempting to log in with only the username and empty password.
     /// </summary>
-    /// <param name="browserType">The browser in which the test will run (Chrome, Edge, etc.).</param>
-    /*
-     Feature UC2: Login Validation
-       As a user of the application
-       I want to be informed when required fields are missing
-       so that I can provide the correct login information
-
-       Scenario: Login with credentials by passing Username
-         Given the user is on the login page
-         When he enters a username, enters a password, then clears the password and clicks the Login button
-         Then an error message "Password is required" should be displayed
-     */
+    /// <param name="browserType">The browser in which the test will run (Chrome, Edge, etc.).</param>    
+    /// <param name="username">The username to be used in the test.</param>
     [DataTestMethod]
     [DynamicData(nameof(LoginTestData.CredentialsUsernameOnlyTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
     public void UC2_LoginWithUsernameOnly_ShouldShow_PasswordError(BrowserType browserType, string username)
@@ -94,17 +73,8 @@ public class LoginTests : TestBase
     /// and navigates to the dashboard displaying the correct title.
     /// </summary>
     /// <param name="browserType">The browser in which the test will run (Chrome, Edge, etc.).</param>
-    /*
-     Feature UC3: Login Success
-       As a user of the application
-       I want to log in with valid credentials
-       so that I can access the dashboard and perform actions
-
-       Scenario: Login with accepted credentials
-         Given the user is on the login page
-         When he enters a valid username and the password "secret_sauce" and clicks the Login button
-         Then the dashboard should be displayed with the title "Swag Labs"
-     */
+    /// <param name="username">The valid username to be used in the test.</param>
+    /// <param name="password">The valid password to be used in the test.</param>
     [DataTestMethod]
     [DynamicData(nameof(LoginTestData.ValidCredentialsTestData), typeof(LoginTestData), DynamicDataSourceType.Method)]
     public void UC3_LoginWithValidCredentials_ShouldNavigateToDashboard(BrowserType browserType, string username, string password)
@@ -131,7 +101,4 @@ public class LoginTests : TestBase
     }
 }
 
-//TODO: Complete readme
-//TODO: Complete doc
 //TODO: Diferentes SO
-//TODO: Verify disign patterns

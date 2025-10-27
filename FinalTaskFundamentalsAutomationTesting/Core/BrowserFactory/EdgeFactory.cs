@@ -5,6 +5,10 @@ namespace FinalTaskFundamentalsAutomationTesting.Core.BrowserFactory;
 
 public class EdgeFactory : IBrowserFactory
 {
+    /// <summary>
+    /// Creates a new instance of Edge WebDriver with specified options.
+    /// </summary>
+    /// <returns>An instance of IWebDriver for Edge browser.</returns>
     public IWebDriver CreateWebDriver()
     {
         var options = new EdgeOptions();

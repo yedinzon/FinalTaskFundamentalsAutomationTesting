@@ -9,9 +9,20 @@ namespace FinalTaskFundamentalsAutomationTesting.Tests;
 [TestClass]
 public abstract class TestBase
 {
+    /// <summary>
+    /// WebDriver instance for browser automation.
+    /// </summary>
     protected IWebDriver _webDriver = null!;
+
+    /// <summary>
+    /// Logger instance for logging test activities.
+    /// </summary>
     protected static ILogger _logger = null!;
 
+    /// <summary>
+    /// Initializes the test class by configuring logging and setting up the logger.
+    /// </summary>
+    /// <param name="context">Test context provided by MSTest framework.</param>
     [ClassInitialize(InheritanceBehavior.BeforeEachDerivedClass)]
     public static void Initialize(TestContext context)
     {
@@ -20,12 +31,19 @@ public abstract class TestBase
         _logger.LogInfo("Test initialization started.");
     }
 
+    /// <summary>
+    /// Sets up the WebDriver for the specified browser type.
+    /// </summary>
+    /// <param name="browserType"></param>
     protected void SetupWebDriver(BrowserType browserType)
     {
         _webDriver ??= WebDriverFactory.Create(browserType);
         _logger.LogInfo($"WebDriver initialized for {browserType}.");
     }
 
+    /// <summary>
+    /// Cleans up the WebDriver instance after each test.
+    /// </summary>
     [TestCleanup]
     public void Cleanup()
     {
