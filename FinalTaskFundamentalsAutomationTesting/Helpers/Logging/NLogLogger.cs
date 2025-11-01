@@ -1,6 +1,6 @@
 ﻿using NLog;
 
-namespace FinalTaskFundamentalsAutomationTesting.Core.Logging;
+namespace FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
 
 /// <summary>
 /// Provides an implementation of <see cref="ILogger"/> using NLog as the logging framework.

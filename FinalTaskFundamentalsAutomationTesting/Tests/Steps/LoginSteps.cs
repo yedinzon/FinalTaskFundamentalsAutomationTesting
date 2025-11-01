@@ -1,6 +1,6 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
 using FinalTaskFundamentalsAutomationTesting.Core.BrowserFactory;
-using FinalTaskFundamentalsAutomationTesting.Core.Logging;
+using FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
 using FinalTaskFundamentalsAutomationTesting.Pages;
 using FluentAssertions;
 using OpenQA.Selenium;

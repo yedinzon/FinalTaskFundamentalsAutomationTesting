@@ -2,14 +2,14 @@
 using NLog.Config;
 using NLog.Targets;
 
-namespace FinalTaskFundamentalsAutomationTesting.Core.Logging;
+namespace FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
 
 public static class NLogSetup
 {
     /// <summary>
     /// Log directory path.
     /// </summary>
-    private static readonly string LogDirectory = "logs";
+    private static readonly string LogDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Logs"));
 
     /// <summary>
     /// Log file name pattern.

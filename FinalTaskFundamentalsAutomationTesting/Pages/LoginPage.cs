@@ -1,4 +1,4 @@
-﻿using FinalTaskFundamentalsAutomationTesting.Core.Logging;
+﻿using FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
 using OpenQA.Selenium;
 
 namespace FinalTaskFundamentalsAutomationTesting.Pages;

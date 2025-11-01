@@ -1,4 +1,4 @@
-﻿namespace FinalTaskFundamentalsAutomationTesting.Core.Logging;
+﻿namespace FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
 
 /// <summary>
 /// Defines methods for logging messages at various severity levels.
