@@ -1,16 +1,10 @@
 ﻿namespace FinalTaskFundamentalsAutomationTesting.Core;
 
 /// <summary>
-/// Browser types enumeration.
+/// Defines the supported web browsers for automated testing.
 /// </summary>
 public enum BrowserType
 {
-    /// <summary>
-    /// Google Chrome browser.
-    /// </summary>
     Chrome,
-    /// <summary>
-    /// Microsoft Edge browser.
-    /// </summary>
     Edge
 }
