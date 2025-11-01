@@ -4,6 +4,10 @@ namespace FinalTaskFundamentalsAutomationTesting.Core.Logging;
 
 public class NLogLogger(Type type) : ILogger
 {
+    static NLogLogger()
+    {
+        NLogSetup.Configure();
+    }
     /// <summary>
     /// Logger instance from NLog.
     /// </summary>
