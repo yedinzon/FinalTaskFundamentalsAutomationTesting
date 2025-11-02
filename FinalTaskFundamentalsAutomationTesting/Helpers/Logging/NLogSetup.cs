@@ -9,7 +9,7 @@ public static class NLogSetup
     /// <summary>
     /// Log directory path.
     /// </summary>
-    private static readonly string LogDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Logs"));
+    private static readonly string LogDirectory = PathHelper.GetLogsPath();
 
     /// <summary>
     /// Log file name pattern.

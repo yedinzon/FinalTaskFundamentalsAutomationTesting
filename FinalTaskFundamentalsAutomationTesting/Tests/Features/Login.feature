@@ -17,21 +17,21 @@ Scenario Outline: UC1 - Login with empty credentials should show username error
 @UC2
 Scenario Outline: UC2 - Login with username only should show password error
     Given I am on the login page in "<browser>" browser
-    When I attempt to login with username "<username>" and empty password
+    When I attempt to login with username and empty password from user "<userKey>"
     Then I should see an error message containing "Password is required"
 
     Examples:
-    | browser | username   |
-    | Chrome  | user-test  |
-    | Edge    | user-test  |
+    | browser | userKey |
+    | Chrome  | user1   |
+    | Edge    | user1   |
 
 @UC3
 Scenario Outline: UC3 - Login with valid credentials should navigate to dashboard
     Given I am on the login page in "<browser>" browser
-    When I login with username "<username>" and password "<password>"
+    When I login with username and password from user "<userKey>"
     Then I should be redirected to the dashboard with title "Swag Labs"
 
     Examples:
-    | browser | username       | password      |
-    | Chrome  | standard_user  | secret_sauce  |
-    | Edge    | standard_user  | secret_sauce  |
+    | browser | userKey | 
+    | Chrome  | user1   |
+    | Edge    | user1   |

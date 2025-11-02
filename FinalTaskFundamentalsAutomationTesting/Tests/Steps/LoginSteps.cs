@@ -1,6 +1,8 @@
 ﻿using FinalTaskFundamentalsAutomationTesting.Core;
 using FinalTaskFundamentalsAutomationTesting.Core.BrowserFactory;
+using FinalTaskFundamentalsAutomationTesting.Helpers;
 using FinalTaskFundamentalsAutomationTesting.Helpers.Logging;
+using FinalTaskFundamentalsAutomationTesting.Models;
 using FinalTaskFundamentalsAutomationTesting.Pages;
 using FluentAssertions;
 using OpenQA.Selenium;
@@ -9,18 +11,18 @@ using Reqnroll;
 namespace FinalTaskFundamentalsAutomationTesting.Tests.Steps;
 
 [Binding]
-public class LoginSteps
+public class LoginSteps(ScenarioContext scenarioContext)
 {
     private IWebDriver _webDriver = null!;
     private LoginPage _loginPage = null!;
     private InventoryPage _inventoryPage = null!;
-    private readonly ScenarioContext _scenarioContext;
-    private readonly NLogLogger _logger;
+    private readonly NLogLogger _logger = new(typeof(LoginSteps));
+    private readonly ScenarioContext _scenarioContext = scenarioContext;
 
-    public LoginSteps(ScenarioContext scenarioContext)
+    [BeforeTestRun]
+    public static void BeforeTestRun()
     {
-        _scenarioContext = scenarioContext;
-        _logger = new NLogLogger(typeof(LoginSteps));
+        UserDataProvider.LoadUserData();
     }
 
     [BeforeScenario]
@@ -63,18 +65,22 @@ public class LoginSteps
         _logger.LogInfo("Clicked Login button after clearing credentials.");
     }
 
-    [When("I attempt to login with username \"(.*)\" and empty password")]
-    public void WhenIAttemptToLoginWithUsernameAndEmptyPassword(string username)
+    [When("I attempt to login with username and empty password from user \"(.*)\"")]
+    public void WhenIAttemptToLoginWithUsernameAndEmptyPassword(string userKey)
     {
-        _loginPage.EnterCredentialsAndThenClear(username, "password-test", clearPasswordOnly: true);
+        UserData user = UserDataProvider.GetUserData(userKey);
+
+        _loginPage.EnterCredentialsAndThenClear(user.Username, "password-test", clearPasswordOnly: true);
         _loginPage.ClickLoginButton();
-        _logger.LogInfo($"Clicked Login button after clearing the password field for username: {username}");
+        _logger.LogInfo($"Clicked Login button after clearing the password field for username: {user.Username}");
     }
 
-    [When("I login with username \"(.*)\" and password \"(.*)\"")]
-    public void WhenILoginWithUsernameAndPassword(string username, string password)
+    [When("I login with username and password from user \"(.*)\"")]
+    public void WhenILoginWithUsernameAndPassword(string userKey)
     {
-        _loginPage.EnterCredentials(username, password);
+        UserData user = UserDataProvider.GetUserData(userKey);
+
+        _loginPage.EnterCredentials(user.Username, user.Password);
         _loginPage.ClickLoginButton();
         _logger.LogInfo("Clicked Login button with valid credentials.");
     }
